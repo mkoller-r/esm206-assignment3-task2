@@ -61,9 +61,9 @@ Ahhh! It only shows the first two words- not the third! The full name is Ki-Adi-
 # Your code here: 
 
 sw_split_name <- starwars %>%  # Start with starwars
-  separate(col = name, # Separate the hair_color column...
-           into = c("name_1","name_2"), # Into two columns 'hair_1' & 'hair_2'
-           sep = "-" # Separated at the first comma
+  separate(col = name, # Separate the name column...
+           into = c("name_1","name_2"), # Into two columns 'name_1' & 'name_2'
+           sep = "-" # Separated at the first dash
   )
 
 ##Sidenote: I am LOVING this exercise so far. This is SUCH an awesome way to play around with new, functional code and explore how it actually works. Thank you so much for putting this together!!
@@ -101,12 +101,12 @@ Make sure to `View()` the resulting data frame (remember: run `View()` in the Co
 ```{r}
 # Your code here:
 
-sw_skin_sep <- starwars %>% 
-  separate(col = skin_color,
-           into = c("skin_1", "skin_2"),
-           sep = ",",
-           extra = "merge",
-           remove = FALSE)
+sw_skin_sep <- starwars %>% #I'm starting from the starwars data
+  separate(col = skin_color, #This command separates the 'skin_color' column
+           into = c("skin_1", "skin_2"), #into two columns, skin_1 and skin_2
+           sep = ",", #This command creates the first separation at the first comma
+           extra = "merge", #If there are additional spaces after the first, this command puts them all into the second column
+           remove = FALSE) #This command keeps the original column
 
 # Woohoo! Got it! AND I understand it! This assignment rocks!
 
@@ -145,11 +145,11 @@ In the code chunk below, starting from the `mpg` data create a new data frame ca
 ```{r}
 # Your code here: 
 
-mpg_model_class <- mpg %>% 
-  unite(col = mpg_model_class,
-        c(model, class),
-        sep = "-",
-        remove = FALSE
+mpg_model_class <- mpg %>% #This line creates a new dataset based on the mpg data frame
+  unite(col = mpg_model_class, #And creates a new column named "mpg_model_class"
+        c(model, class), #The new column combines the 'model' and 'class' columns
+        sep = "-", #This line puts a space between the two variables once they're combined
+        remove = FALSE #This keeps the original column
         )
 
 #YESSSSS, this rocks SO MUCH!
@@ -183,11 +183,11 @@ In the code chunk below, use `ymd()` to convert a date that you choose in `YYYY-
 ```{r}
 # Your code here: 
 
-ymd("2020/11/03")
+ymd("2020/11/03") #This recodes 2020/11/03 to a YYYYMMDD format
 
-ymd("2020-11-03")
+ymd("2020-11-03") #This recodes 2020-11-03 to a YYYYMMDD format
 
-ymd(20201103)
+ymd(20201103) #This recodes 20201103 to a YYYYMMDD format
 
 #I kept getting an error that says "All formats failed to parse. No formats found."Much easier to troubleshoot this stuff when it's in small little chunks...I realized that I wasn't putting the appropriate quotation marks around my dates. Problem solved!
 
@@ -214,9 +214,9 @@ In the code chunk below, create a vector (using `c()`, as above) stored as `some
 
 ```{r}
 # Your code here: 
-some_dates <- c(03121988, 08091989, 070888)
-some_dates_converted <- mdy(some_dates)
-some_dates_converted
+some_dates <- c(03121988, 08091989, 070888) #this stores 3 different values as vectors
+some_dates_converted <- mdy(some_dates) #this converts these values to a MMDDYYYY format
+some_dates_converted #this calls up the new dates
 
 #Success!
 ```
@@ -267,9 +267,9 @@ gasol_hookshots <- lakers %>%
   mutate(date_new = ymd(date)) %>%  #This is me creating a new column formatting the date like YYYY-MM-DD
   mutate(month_new = month(date_new)) #This is me creating a new column just showing the value of the month
 
-hook_by_month <- gasol_hookshots %>% 
-    group_by(month_new, type) %>% 
-    count(month_new)
+hook_by_month <- gasol_hookshots %>% #this creates a new dataset based on "gasol_hookshots"
+    group_by(month_new, type) %>% #this tells R that we're going to have 2 columns titled 'month_new' and 'type'
+    count(month_new) #This line says that there will be a third column displaying the number of times Gasol attempted a hook shot in a given month  
 
 ##OK, I got it, and I'm proud, but I still feel like I should somehow be using the summarize function? And also, I'm not totally sure how to get the name of the last column- "n"- to show up as something else. I've tried mutating a few things, which don't really work...so I'm going to call this a win and move on.
 
@@ -326,8 +326,8 @@ Note: If you add another condition within `case_when()` that is `TRUE ~ "some th
 
 storms_danger <- storms %>% #Start from storms data
   mutate(danger = case_when( #Add a new column named "danger"
-    status == c("hurricane") ~ "high",
-    TRUE ~ "moderate"
+    status == c("hurricane") ~ "high", #This states that if the variable in the column 'status' is EQUAL TO 'hurricane', that the associated value in the new 'danger' column will be 'high'
+    TRUE ~ "moderate" #This line says that any variables in the 'status' column NOT matching 'hurricane' will have the associated value 'moderate' in the new 'danger' column
     ))
 
 ```

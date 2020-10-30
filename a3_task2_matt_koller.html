@@ -408,9 +408,9 @@ sw_sep_hair &lt;- starwars %&gt;%  # Start with starwars
 <pre class="r"><code># Your code here: 
 
 sw_split_name &lt;- starwars %&gt;%  # Start with starwars
-  separate(col = name, # Separate the hair_color column...
-           into = c(&quot;name_1&quot;,&quot;name_2&quot;), # Into two columns &#39;hair_1&#39; &amp; &#39;hair_2&#39;
-           sep = &quot;-&quot; # Separated at the first comma
+  separate(col = name, # Separate the name column...
+           into = c(&quot;name_1&quot;,&quot;name_2&quot;), # Into two columns &#39;name_1&#39; &amp; &#39;name_2&#39;
+           sep = &quot;-&quot; # Separated at the first dash
   )
 
 ##Sidenote: I am LOVING this exercise so far. This is SUCH an awesome way to play around with new, functional code and explore how it actually works. Thank you so much for putting this together!!</code></pre>
@@ -440,12 +440,12 @@ sw_sep_names &lt;- starwars %&gt;% # Start from starwars data
 <p>Make sure to <code>View()</code> the resulting data frame (remember: run <code>View()</code> in the Console, or click on the object name in the Environment) to ensure it worked as expected.</p>
 <pre class="r"><code># Your code here:
 
-sw_skin_sep &lt;- starwars %&gt;% 
-  separate(col = skin_color,
-           into = c(&quot;skin_1&quot;, &quot;skin_2&quot;),
-           sep = &quot;,&quot;,
-           extra = &quot;merge&quot;,
-           remove = FALSE)
+sw_skin_sep &lt;- starwars %&gt;% #I&#39;m starting from the starwars data
+  separate(col = skin_color, #This command separates the &#39;skin_color&#39; column
+           into = c(&quot;skin_1&quot;, &quot;skin_2&quot;), #into two columns, skin_1 and skin_2
+           sep = &quot;,&quot;, #This command creates the first separation at the first comma
+           extra = &quot;merge&quot;, #If there are additional spaces after the first, this command puts them all into the second column
+           remove = FALSE) #This command keeps the original column
 
 # Woohoo! Got it! AND I understand it! This assignment rocks!</code></pre>
 </div>
@@ -474,11 +474,11 @@ mpg_make_model &lt;- mpg %&gt;% # Start with mpg
 <p>In the code chunk below, starting from the <code>mpg</code> data create a new data frame called <code>mpg_model_class</code> with a new column called <code>model_class</code> that combines the <code>model</code> and <code>class</code> column information, separated by a dash “-”. Also add a line (similarly for <code>separate()</code> example above) that retains the original columns.</p>
 <pre class="r"><code># Your code here: 
 
-mpg_model_class &lt;- mpg %&gt;% 
-  unite(col = mpg_model_class,
-        c(model, class),
-        sep = &quot;-&quot;,
-        remove = FALSE
+mpg_model_class &lt;- mpg %&gt;% #This line creates a new dataset based on the mpg data frame
+  unite(col = mpg_model_class, #And creates a new column named &quot;mpg_model_class&quot;
+        c(model, class), #The new column combines the &#39;model&#39; and &#39;class&#39; columns
+        sep = &quot;-&quot;, #This line puts a space between the two variables once they&#39;re combined
+        remove = FALSE #This keeps the original column
         )
 
 #YESSSSS, this rocks SO MUCH!</code></pre>
@@ -505,11 +505,11 @@ ymd(20201118)</code></pre>
 <p>In the code chunk below, use <code>ymd()</code> to convert a date that you choose in <code>YYYY-MM-DD</code>, <code>YYYY/MM/DD</code> and <code>YYYYMMDD</code> form to a Date class:</p>
 <pre class="r"><code># Your code here: 
 
-ymd(&quot;2020/11/03&quot;)</code></pre>
+ymd(&quot;2020/11/03&quot;) #This recodes 2020/11/03 to a YYYYMMDD format</code></pre>
 <pre><code>## [1] &quot;2020-11-03&quot;</code></pre>
-<pre class="r"><code>ymd(&quot;2020-11-03&quot;)</code></pre>
+<pre class="r"><code>ymd(&quot;2020-11-03&quot;) #This recodes 2020-11-03 to a YYYYMMDD format</code></pre>
 <pre><code>## [1] &quot;2020-11-03&quot;</code></pre>
-<pre class="r"><code>ymd(20201103)</code></pre>
+<pre class="r"><code>ymd(20201103) #This recodes 20201103 to a YYYYMMDD format</code></pre>
 <pre><code>## [1] &quot;2020-11-03&quot;</code></pre>
 <pre class="r"><code>#I kept getting an error that says &quot;All formats failed to parse. No formats found.&quot;Much easier to troubleshoot this stuff when it&#39;s in small little chunks...I realized that I wasn&#39;t putting the appropriate quotation marks around my dates. Problem solved!</code></pre>
 </div>
@@ -530,9 +530,9 @@ my_dates_converted # Return my_dates_converted</code></pre>
 <h4>3B. On your own</h4>
 <p>In the code chunk below, create a vector (using <code>c()</code>, as above) stored as <code>some_dates</code> that contains three values that represent dates as numbers, in mdy format: 11061972, 02142007,01301843. Then in the next line, use <code>lubridate::mdy()</code> to return them in date format, storing as a vector <code>some_dates_converted</code>. Write a third line to check the class of that vector.</p>
 <pre class="r"><code># Your code here: 
-some_dates &lt;- c(03121988, 08091989, 070888)
-some_dates_converted &lt;- mdy(some_dates)
-some_dates_converted</code></pre>
+some_dates &lt;- c(03121988, 08091989, 070888) #this stores 3 different values as vectors
+some_dates_converted &lt;- mdy(some_dates) #this converts these values to a MMDDYYYY format
+some_dates_converted #this calls up the new dates</code></pre>
 <pre><code>## [1] &quot;1988-03-12&quot; &quot;1989-08-09&quot; &quot;1988-07-08&quot;</code></pre>
 <pre class="r"><code>#Success!</code></pre>
 </div>
@@ -593,9 +593,9 @@ gasol_hookshots &lt;- lakers %&gt;%
   mutate(date_new = ymd(date)) %&gt;%  #This is me creating a new column formatting the date like YYYY-MM-DD
   mutate(month_new = month(date_new)) #This is me creating a new column just showing the value of the month
 
-hook_by_month &lt;- gasol_hookshots %&gt;% 
-    group_by(month_new, type) %&gt;% 
-    count(month_new)
+hook_by_month &lt;- gasol_hookshots %&gt;% #this creates a new dataset based on &quot;gasol_hookshots&quot;
+    group_by(month_new, type) %&gt;% #this tells R that we&#39;re going to have 2 columns titled &#39;month_new&#39; and &#39;type&#39;
+    count(month_new) #This line says that there will be a third column displaying the number of times Gasol attempted a hook shot in a given month  
 
 ##OK, I got it, and I&#39;m proud, but I still feel like I should somehow be using the summarize function? And also, I&#39;m not totally sure how to get the name of the last column- &quot;n&quot;- to show up as something else. I&#39;ve tried mutating a few things, which don&#39;t really work...so I&#39;m going to call this a win and move on.</code></pre>
 </div>
@@ -634,8 +634,8 @@ storm_season &lt;- storms %&gt;% # Start from storms data
 
 storms_danger &lt;- storms %&gt;% #Start from storms data
   mutate(danger = case_when( #Add a new column named &quot;danger&quot;
-    status == c(&quot;hurricane&quot;) ~ &quot;high&quot;,
-    TRUE ~ &quot;moderate&quot;
+    status == c(&quot;hurricane&quot;) ~ &quot;high&quot;, #This states that if the variable in the column &#39;status&#39; is EQUAL TO &#39;hurricane&#39;, that the associated value in the new &#39;danger&#39; column will be &#39;high&#39;
+    TRUE ~ &quot;moderate&quot; #This line says that any variables in the &#39;status&#39; column NOT matching &#39;hurricane&#39; will have the associated value &#39;moderate&#39; in the new &#39;danger&#39; column
     ))</code></pre>
 </div>
 </div>
